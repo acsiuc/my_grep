@@ -2,15 +2,13 @@ import sys
 import os
 
 for root, dirs, files in os.walk(u'C:\\Users\\Axiuc\\Downloads'):
-    print('Current Directory: ', root)
-    print('Subidrectories: ', dirs)
-    print('Files:', files)
     for x in files:
         to_read = os.path.join(root, x)
         try:
             with open(to_read, "r") as f:
                 for line in f:
-                    print(line)
+                    if sys.argv[1] in line:
+                        print(line)
         except UnicodeDecodeError:
             continue
 
