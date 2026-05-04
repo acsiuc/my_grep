@@ -1,22 +1,14 @@
 import sys
 import os
+import click
 
-arguments = []
-flags = []
-for x in sys.argv[1:]:
-    if x[0] == '-' and x[1].isalpha():
-        flags.append(x)
-    else:
-        arguments.append(x)
+@click.command()
+@click.option('-i', is_flag=True, help ='Case insensitive searching of keyword')
+@click.option('-n', is_flag=True, help ='Gives the number of the line')
+@click.argument('word')
+@click.argument('user_path')
 
-print(flags)
-print(arguments)
-
-if arguments:
-    if len(arguments)>1:
-        user_path = arguments[-1]
-    elif len(arguments) == 1:
-        user_path = '.'
+def search(word, user_path):
     for root, dirs, files in os.walk(user_path):
         for x in files:
             to_read = os.path.join(root, x)
@@ -27,13 +19,13 @@ if arguments:
                             if arguments[0].lower() in line.lower():
                                 if '-n' in flags:
                                     print(line_number,line,f'found in {to_read}')
-                                elif arguments[0].lower() in line.lower():
+                                else:
                                     print(line,f'found in {to_read}')
                         else:
-                            if arguments[0] in line :
+                            if word in line :
                                 if '-n' in flags:
                                     print(line_number,line,f'found in {to_read}')
-                                elif arguments[0] in line:
+                                else:
                                     print(line,f'found in {to_read}')
             except UnicodeDecodeError:
                 continue
