@@ -11,9 +11,10 @@ for x in sys.argv[1:]:
 
 print(flags)
 print(arguments)
-print(sys.argv)
 
-for root, dirs, files in os.walk(u'C:\\Users\\Axiuc\\Downloads'):
+user_path = arguments[-1]
+
+for root, dirs, files in os.walk(user_path):
     for x in files:
         to_read = os.path.join(root, x)
         try:
