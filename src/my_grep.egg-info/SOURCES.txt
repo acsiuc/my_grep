@@ -1,0 +1,14 @@
+README.md
+pyproject.toml
+src/bin/__init__.py
+src/bin/cli.py
+src/my_grep/__init__.py
+src/my_grep.egg-info/PKG-INFO
+src/my_grep.egg-info/SOURCES.txt
+src/my_grep.egg-info/dependency_links.txt
+src/my_grep.egg-info/entry_points.txt
+src/my_grep.egg-info/requires.txt
+src/my_grep.egg-info/top_level.txt
+src/my_grep/modules/__init__.py
+src/my_grep/modules/file_searching.py
+src/my_grep/modules/pattern_searching.py
