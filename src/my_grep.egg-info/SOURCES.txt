@@ -9,6 +9,6 @@ src/my_grep.egg-info/dependency_links.txt
 src/my_grep.egg-info/entry_points.txt
 src/my_grep.egg-info/requires.txt
 src/my_grep.egg-info/top_level.txt
-src/my_grep/modules/__init__.py
-src/my_grep/modules/file_searching.py
-src/my_grep/modules/pattern_searching.py
+src/my_grep/searching/__init__.py
+src/my_grep/searching/file_searching.py
+src/my_grep/searching/pattern_searching.py
