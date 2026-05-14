@@ -13,3 +13,8 @@ mygrep = "bin.cli:show_results"
 
 [tool.uv]
 package = true
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.3",
+]

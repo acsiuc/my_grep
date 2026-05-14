@@ -1,5 +1,5 @@
-from my_grep.modules.pattern_searching import regex_pattern_search
-from my_grep.modules.pattern_searching import word_matching
+from my_grep.searching.pattern_searching import regex_pattern_search
+from my_grep.searching.pattern_searching import word_matching
 
 import pytest
 
