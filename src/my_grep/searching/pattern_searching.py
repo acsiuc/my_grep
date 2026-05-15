@@ -1,23 +1,25 @@
 import re
 
 
-def word_matching(word, i, e, line, v=False):
+def word_matching(
+    word: str, ignore_case: bool, regex: bool, line: str, invert: bool = False
+):
     match_found = False
-    if not v:
-        if e:
-            match_found = regex_pattern_search(word, line, i)
+    if not invert:
+        if regex:
+            match_found = regex_pattern_search(word, line, ignore_case, invert)
         else:
-            if i:
+            if ignore_case:
                 if word.lower() in line.lower():
                     match_found = True
             else:
                 if word in line:
                     match_found = True
     else:
-        if e:
-            match_found = regex_pattern_search(word, line, i, v)
+        if regex:
+            match_found = regex_pattern_search(word, line, ignore_case, invert)
         else:
-            if i:
+            if ignore_case:
                 if word.lower() not in line.lower():
                     match_found = True
             else:
@@ -26,17 +28,17 @@ def word_matching(word, i, e, line, v=False):
     return match_found
 
 
-def regex_pattern_search(word, line, i, v=False):
+def regex_pattern_search(word: str, line: str, ignore_case: bool, invert: bool = False):
     match_found = False
-    if not v:
-        if i:
+    if not invert:
+        if ignore_case:
             if re.search(word, line, re.IGNORECASE):
                 match_found = True
         else:
             if re.search(word, line):
                 match_found = True
     else:
-        if i:
+        if ignore_case:
             if not re.search(word, line, re.IGNORECASE):
                 match_found = True
         else:

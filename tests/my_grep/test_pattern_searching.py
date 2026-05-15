@@ -21,7 +21,7 @@ def test_word_matching():
 
 
 def test_v_word_matching():
-    assert not word_matching("eu", False, False, "eu sunt", v=True)
+    assert not word_matching("eu", False, False, "eu sunt", True)
 
 
 def test_word_matching_false():

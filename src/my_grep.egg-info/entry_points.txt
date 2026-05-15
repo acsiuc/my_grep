@@ -1,2 +1,2 @@
 [console_scripts]
-mygrep = bin.cli:show_results
+mygrep = bin.cli:matches_found

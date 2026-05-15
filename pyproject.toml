@@ -9,7 +9,7 @@ dependencies = [
     "click>=8.3.3",
 ]
 [project.scripts]
-mygrep = "bin.cli:show_results"
+mygrep = "bin.cli:matches_found"
 
 [tool.uv]
 package = true
