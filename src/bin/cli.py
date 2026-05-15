@@ -37,17 +37,20 @@ def matches_found(
     word, user_path, ignore_case, regex, count, recursive, row_number, invert
 ):
     counter = 0
-    for line, line_number, to_read in split_and_search(
-        user_path, word, ignore_case, row_number, recursive, count, regex, invert
-    ):
-        counter += 1
-        if not count:
-            if row_number:
-                click.echo(f"{line_number} {line} found in {to_read}")
-            else:
-                click.echo(f"{line} found in {to_read}")
-    if count:
-        click.echo(f"{word} has been found {counter} times")
+    try:
+        for line, line_number, to_read in split_and_search(
+            user_path, word, ignore_case, row_number, recursive, count, regex, invert
+        ):
+            counter += 1
+            if not count:
+                if row_number:
+                    click.echo(f"{line_number} {line} found in {to_read}")
+                else:
+                    click.echo(f"{line} found in {to_read}")
+        if count:
+            click.echo(f"{word} has been found {counter} times")
+    except ValueError:
+        click.echo(f"{user_path} path does not exist")
 
 
 if __name__ == "__main__":

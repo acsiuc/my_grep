@@ -27,6 +27,8 @@ def split_and_search(
                 continue
     elif os.path.isfile(user_path):
         results.extend(file_opening(word, user_path, ignore_case, regex, invert))
+    else:
+        raise ValueError("Path does not exist.")
     return results
 
 

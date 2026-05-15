@@ -1,5 +1,6 @@
 from my_grep.searching.file_searching import file_opening
 from my_grep.searching.file_searching import split_and_search
+import pytest
 
 
 def test_file_opening(tmp_path):
@@ -18,3 +19,14 @@ def test_split_and_search(tmp_path):
     assert split_and_search(
         test_file, "eu", False, False, False, False, False, False
     ) == [("eu sunt aici", 0, test_file)]
+
+
+def test_incorrect_path_split_and_search(tmp_path):
+    folder = tmp_path / "folder"
+    folder.mkdir()
+    test_file = folder / "test.txt"
+    test_file.write_text("eu sunt aici")
+    with pytest.raises(ValueError):
+        split_and_search(
+            r"C:\not\exist", "eu", False, False, False, False, False, False
+        )
