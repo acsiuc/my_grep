@@ -13,15 +13,20 @@ def split_and_search(
     invert: bool = False,
 ) -> list:
     results = []
-    for root, dirs, files in os.walk(user_path):
-        try:
-            for x in files:
-                to_read = os.path.join(root, x)
-                results.extend(file_opening(word, to_read, ignore_case, regex, invert))
-            if not recursive:
-                break
-        except UnicodeDecodeError:
-            continue
+    if os.path.isdir(user_path):
+        for root, dirs, files in os.walk(user_path):
+            try:
+                for x in files:
+                    to_read = os.path.join(root, x)
+                    results.extend(
+                        file_opening(word, to_read, ignore_case, regex, invert)
+                    )
+                if not recursive:
+                    break
+            except UnicodeDecodeError:
+                continue
+    elif os.path.isfile(user_path):
+        results.extend(file_opening(word, user_path, ignore_case, regex, invert))
     return results
 
 
