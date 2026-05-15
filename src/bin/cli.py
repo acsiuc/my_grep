@@ -15,12 +15,19 @@ from my_grep.searching.file_searching import split_and_search
     is_flag=True,
     help="Iteratively searching through all subdirectories of root_path",
 )
+@click.option(
+    "-v",
+    is_flag=True,
+    help="Everything but the lines that contain the match",
+)
 @click.option("-n", is_flag=True, help="Gives the number of the line")
 @click.argument("word")
 @click.argument("user_path")
-def show_results(word, user_path, i, e, c, r, n):
+def show_results(word, user_path, i, e, c, r, n, v):
     counter = 0
-    for line, line_number, to_read in split_and_search(user_path, word, i, n, r, c, e):
+    for line, line_number, to_read in split_and_search(
+        user_path, word, i, n, r, c, e, v
+    ):
         counter += 1
         if not c:
             if n:
@@ -28,7 +35,7 @@ def show_results(word, user_path, i, e, c, r, n):
             else:
                 click.echo(f"{line} found in {to_read}")
     if c:
-        click.echo(f"{word} has been found      {counter} times")
+        click.echo(f"{word} has been found {counter} times")
 
 
 if __name__ == "__main__":
