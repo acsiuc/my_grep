@@ -31,24 +31,60 @@ from my_grep.searching.file_searching import split_and_search
     help="Everything but the lines that contain the match",
 )
 @click.option("-n", "--row_number", is_flag=True, help="Gives the number of the line")
+@click.option(
+    "-l",
+    "--list_files",
+    is_flag=True,
+    help="Shows only the files in which the match is found",
+)
 @click.argument("word")
 @click.argument("user_path")
 def matches_found(
-    word, user_path, ignore_case, regex, count, recursive, row_number, invert
+    word,
+    user_path,
+    ignore_case,
+    regex,
+    count,
+    recursive,
+    row_number,
+    list_files,
+    invert,
 ):
     counter = 0
     try:
-        for line, line_number, to_read in split_and_search(
-            user_path, word, ignore_case, row_number, recursive, count, regex, invert
-        ):
-            counter += 1
-            if not count:
-                if row_number:
-                    click.echo(f"{line_number} {line} found in {to_read}")
-                else:
-                    click.echo(f"{line} found in {to_read}")
-        if count:
-            click.echo(f"{word} has been found {counter} times")
+        if not list_files:
+            for line, line_number, to_read in split_and_search(
+                user_path,
+                word,
+                ignore_case,
+                row_number,
+                recursive,
+                count,
+                regex,
+                list_files,
+                invert,
+            ):
+                counter += 1
+                if not count:
+                    if row_number:
+                        click.echo(f"{line_number} {line} found in {to_read}")
+                    else:
+                        click.echo(f"{line} found in {to_read}")
+            if count:
+                click.echo(f"{word} has been found {counter} times")
+        else:
+            for file_found in split_and_search(
+                user_path,
+                word,
+                ignore_case,
+                row_number,
+                recursive,
+                count,
+                regex,
+                list_files,
+                invert,
+            ):
+                click.echo(f"{word} was found in {file_found}")
     except ValueError:
         click.echo(f"{user_path} path does not exist")
 

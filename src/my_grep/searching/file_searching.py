@@ -6,10 +6,9 @@ def split_and_search(
     user_path: str,
     word: str,
     ignore_case: bool,
-    row_number: bool,
     recursive: bool,
-    count: bool,
     regex: bool,
+    list_files: bool,
     invert: bool = False,
 ) -> list:
     results = []
@@ -19,23 +18,40 @@ def split_and_search(
                 for x in files:
                     to_read = os.path.join(root, x)
                     results.extend(
-                        file_opening(word, to_read, ignore_case, regex, invert)
+                        file_opening(
+                            word, to_read, ignore_case, regex, invert, list_files
+                        )
                     )
                 if not recursive:
                     break
             except UnicodeDecodeError:
                 continue
     elif os.path.isfile(user_path):
-        results.extend(file_opening(word, user_path, ignore_case, regex, invert))
+        results.extend(
+            file_opening(word, user_path, ignore_case, regex, invert, list_files)
+        )
     else:
         raise ValueError("Path does not exist.")
     return results
 
 
-def file_opening(word: str, to_read: str, ignore_case: bool, regex: bool, invert: bool):
+def file_opening(
+    word: str,
+    to_read: str,
+    ignore_case: bool,
+    regex: bool,
+    invert: bool,
+    list_files: bool,
+):
     match_data = []
     with open(to_read, "r") as f:
-        for line_number, line in enumerate(f):
-            if word_matching(word, ignore_case, regex, line, invert):
-                match_data.append((line, line_number, to_read))
+        if not list_files:
+            for line_number, line in enumerate(f):
+                if word_matching(word, ignore_case, regex, line, invert):
+                    match_data.append((line, line_number, to_read))
+        else:
+            for line_number, line in enumerate(f):
+                if word_matching(word, ignore_case, regex, line, invert):
+                    match_data.append(to_read)
+                    break
     return match_data
