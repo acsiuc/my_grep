@@ -44,14 +44,17 @@ def file_opening(
     list_files: bool,
 ):
     match_data = []
-    with open(to_read, "r") as f:
-        if not list_files:
-            for line_number, line in enumerate(f):
-                if word_matching(word, ignore_case, regex, line, invert):
-                    match_data.append((line, line_number, to_read))
-        else:
-            for line_number, line in enumerate(f):
-                if word_matching(word, ignore_case, regex, line, invert):
-                    match_data.append(to_read)
-                    break
+    try:
+        with open(to_read, "r") as f:
+            if not list_files:
+                for line_number, line in enumerate(f):
+                    if word_matching(word, ignore_case, regex, line, invert):
+                        match_data.append((line, line_number, to_read))
+            else:
+                for line_number, line in enumerate(f):
+                    if word_matching(word, ignore_case, regex, line, invert):
+                        match_data.append(to_read)
+                        break
+    except UnicodeDecodeError:
+        return match_data
     return match_data
