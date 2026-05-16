@@ -38,12 +38,13 @@ def test_file_only_file_opening(tmp_path):
     assert file_opening("eu", test_file, False, False, False, True) == [test_file]
 
 
-def test_file_only_path_split_and_search(tmp_path):
+def test_folder_split_and_search(tmp_path):
     folder = tmp_path / "folder"
     folder.mkdir()
     test_file = folder / "test.txt"
+    second_file = folder / "second_test.txt"
     test_file.write_text("eu sunt aici")
-
-    assert split_and_search(test_file, "eu", False, False, False, True, False) == [
-        test_file
+    second_file.write_text("nimeni")
+    assert split_and_search(folder, "eu", False, False, False, True, False) == [
+        str(test_file)
     ]
