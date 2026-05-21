@@ -9,6 +9,7 @@ def split_and_search(
     recursive: bool,
     regex: bool,
     list_files: bool,
+    fuzzy: bool,
     invert: bool = False,
 ) -> list:
     results = []
@@ -19,7 +20,7 @@ def split_and_search(
                     to_read = os.path.join(root, x)
                     results.extend(
                         file_opening(
-                            word, to_read, ignore_case, regex, invert, list_files
+                            word, to_read, ignore_case, regex, invert, fuzzy, list_files
                         )
                     )
                 if not recursive:
@@ -28,7 +29,7 @@ def split_and_search(
                 continue
     elif os.path.isfile(user_path):
         results.extend(
-            file_opening(word, user_path, ignore_case, regex, invert, list_files)
+            file_opening(word, user_path, ignore_case, regex, invert, fuzzy, list_files)
         )
     else:
         raise ValueError("Path does not exist.")
@@ -41,6 +42,7 @@ def file_opening(
     ignore_case: bool,
     regex: bool,
     invert: bool,
+    fuzzy: bool,
     list_files: bool,
 ):
     match_data = []
@@ -48,11 +50,13 @@ def file_opening(
         with open(to_read, "r") as f:
             if not list_files:
                 for line_number, line in enumerate(f):
-                    if word_matching(word, ignore_case, regex, line, invert):
+                    line = line.strip("\n")
+                    if word_matching(word, ignore_case, regex, line, fuzzy, invert):
                         match_data.append((line, line_number, to_read))
             else:
                 for line_number, line in enumerate(f):
-                    if word_matching(word, ignore_case, regex, line, invert):
+                    line = line.strip("\n")
+                    if word_matching(word, ignore_case, regex, line, fuzzy, invert):
                         match_data.append(to_read)
                         break
     except UnicodeDecodeError:

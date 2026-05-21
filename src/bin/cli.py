@@ -37,6 +37,12 @@ from my_grep.searching.file_searching import split_and_search
     is_flag=True,
     help="Shows only the files in which the match is found",
 )
+@click.option(
+    "-f",
+    "--fuzzy",
+    is_flag=True,
+    help="Shows a close match, using Levenshtein distance",
+)
 @click.argument("word")
 @click.argument("user_path")
 def matches_found(
@@ -48,6 +54,7 @@ def matches_found(
     recursive,
     row_number,
     list_files,
+    fuzzy,
     invert,
 ):
     counter = 0
@@ -57,11 +64,10 @@ def matches_found(
                 user_path,
                 word,
                 ignore_case,
-                row_number,
                 recursive,
-                count,
                 regex,
                 list_files,
+                fuzzy,
                 invert,
             ):
                 counter += 1
@@ -77,11 +83,10 @@ def matches_found(
                 user_path,
                 word,
                 ignore_case,
-                row_number,
                 recursive,
-                count,
                 regex,
                 list_files,
+                fuzzy,
                 invert,
             ):
                 click.echo(f"{word} was found in {file_found}")
