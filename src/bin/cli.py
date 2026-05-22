@@ -59,6 +59,8 @@ def matches_found(
 ):
     counter = 0
     try:
+        if fuzzy and regex:
+            raise click.UsageError("Regex and Fuzzy matching flags both active")
         if not list_files:
             for line, line_number, to_read in split_and_search(
                 user_path,
