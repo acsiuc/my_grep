@@ -1,0 +1,2 @@
+[console_scripts]
+mygrep = bin.cli:matches_found
